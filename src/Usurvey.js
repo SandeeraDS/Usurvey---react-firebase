@@ -17,7 +17,7 @@ class Usurvey extends Component {
   nameSubmit(event) {
     var studentName = this.refs.name.value;
     console.log(studentName);
-    this.setState({ studentName: studentName }, function() {
+    this.setState({ studentName: studentName }, function () {
       console.log(this.state);
     });
   }
@@ -32,20 +32,24 @@ class Usurvey extends Component {
       answers.answer3 = event.target.value;
     }
 
-    this.setState({answers:answers},function(){
-        console.log(this.state);
-        
+    this.setState({ answers: answers }, function () {
+      console.log(this.state);
+
     })
   }
   questionSubmitted(event) {
-    //todo
+    firebase.database().ref('usurvey/' + this.state.uid).set({
+      studentName: this.state.studentName,
+      answers: this.state.answers
+    });
+    this.setState({ isSubmitted: true })
   }
 
   constructor(props) {
     super(props);
     this.state = {
       uid: uuid.v1(),
-      studentName: "sandeera",
+      studentName: "",
       answers: {
         answer1: "",
         answer2: "",
